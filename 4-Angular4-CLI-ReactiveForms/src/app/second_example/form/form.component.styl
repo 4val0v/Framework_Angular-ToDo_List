@@ -1,0 +1,221 @@
+.price-form{
+  margin-bottom: 10px;
+  transition all 0.4s ease
+  label{
+    display block
+    width: 100%
+    position relative
+    border-radius 6px
+    transition all 0.4s ease
+    &:focus{
+    //background: rgba(0, 0, 0, 0.18);
+      &:before{
+        transform: scaleX(1);
+      }
+    }
+    &:before{
+    // для визуального ефекта при фокусе на инпуты
+      content ''
+      display block
+      position absolute
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      border-radius: 7px;
+      background-color: rgba(127, 210, 255, 0.15);
+      transform: scaleX(0); // активация: scaleX(1);
+      transition: transform 250ms linear,background-color .3s cubic-bezier(.55,0,.55,.2);
+    }
+    &:after{
+      content: '';
+      display: block;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 15px;
+      height: 16px;
+      right: 10px;
+      top: 11px;
+      pointer-events: none;
+      transition: all 0.4s ease;
+    }
+    &:nth-child(1){
+      margin: 10px auto;
+      &:after{
+        background-color: #ddd;
+      }
+    }
+    &:nth-child(2){
+      margin: 0 0 30px 0;
+      &:after{
+        background-color #444
+      }
+    }
+    inputTextColor = #12a2f9;
+    input{
+      width: 100%;
+      margin: 0px auto;
+      border-radius 5px
+      height: 38px;
+      border: 1px solid #11a6f7;
+      padding-left 19px
+      padding-right 32px
+      color: inputTextColor;
+      font-family: Roboto;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      background: transparent;
+      transition all 0.4s ease
+      &:focus{
+        background: rgba(127, 210, 255, 0.15);
+        &:valid{
+          border: 1px solid #05cc05;
+        }
+      }
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus
+    input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+      border: 1px solid #11a6f7;
+      color: inputTextColor;
+      -webkit-text-fill-color: inputTextColor; // цвет текста
+      -webkit-box-shadow: 0 0 0px 1000px transparent inset; // цвет фона
+      transition: background-color 5000s ease-in-out 0s;
+      background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(0,174,255,0.04) 50%,rgba(255,255,255,0) 51%,rgba(0,174,255,0.03) 100%);
+    }
+    input::-webkit-input-placeholder {
+            color: inputTextColor;
+          }
+    input::-moz-placeholder {
+            color: inputTextColor;
+          }
+  }
+  .inputErr{
+    input{
+      &:focus:valid,&:focus:invalid{
+        border: 1px solid #fd000d;
+        transition all .4s ease-out
+      }
+    }
+  }
+  .form-btn{
+    width: 100%
+    text-align center
+    background-color: #169bfc;
+    background-image: linear-gradient(-210deg, #169bfc 0%, #169bfc 2%, #29bfd3 100%);
+    border-radius 5px
+    cursor pointer
+    padding 13px 10px
+    height: 45px;
+    line-height: 20px;
+    color: #fff;
+    font-size: 13px;
+    transition all 0.4s ease
+    &:hover{
+      box-shadow: 0 8px 24px rgba(23, 179, 233, 0.35);
+      background-image: linear-gradient(-210deg, #169bfc 0%, #169bfc 2%, #29bfd3 100%);
+    }
+    span{
+      margin 0
+      color: #ffffff;
+      font-family: "Maven Pro";
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+  }
+}
+
+@media only screen and (max-width : 1349px){
+  /* 1349px * 1240px */
+  .price-form{
+    .form-btn{
+      font-size: 12px;
+    }
+  }
+}
+@media only screen and (max-width : 1240px){
+  .price-form{
+    .form-btn{
+      font-size 11px
+    }
+  }
+}
+@media only screen and (max-width : 1149px){
+// 1022px - 991px
+  .price-form{
+    .form-btn{
+      padding: 13px 0px;
+      font-size 11px
+      span{
+        letter-spacing -.2px
+      }
+    }
+  }
+}
+@media only screen and (max-width : 991px){
+// 600px - 991px
+  .price-form {
+    margin: 0;
+    padding: 0 75px 0 50px;
+    .form-btn {
+      padding: 13px 25px;
+      font-size: 18px;
+      span {
+        letter-spacing .6px
+      }
+    }
+  }
+}
+@media only screen and (max-width : 601px) {
+// 530px - 600px
+  .price-form {
+    margin: 0;
+    padding: 0 35px 0 10px;
+    .form-btn {
+      padding: 13px 25px;
+      font-size: 18px;
+      span {
+        letter-spacing .6px
+      }
+    }
+  }
+}
+@media only screen and (max-width : 530px) {
+// 395px - 530px
+  .price-form {
+    margin: 0;
+    padding: 0 35px 0 10px;
+    .form-btn {
+      padding: 13px 7px;
+      font-size: 14px;
+      span {
+        letter-spacing: -0.4px;
+      }
+    }
+  }
+}
+@media only screen and (max-width : 395px) {
+// 300px - 395px
+  .price-form {
+    margin: 0;
+    padding: 0;
+    .form-btn {
+      padding: 13px 0px;
+      font-size: 12px;
+      span {
+        letter-spacing: -0.4px;
+      }
+    }
+  }
+}

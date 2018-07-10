@@ -1,0 +1,25 @@
+<form class="todo-form" (ngSubmit)="createTasks(); formInputVal.reset()" #formInputVal="ngForm">
+    <!--
+      #formInputVal="ngForm" = добовляем локальную переменную в область видимости
+      formInputVal.reset() = вызываем сброс формы
+    -->
+    <input type="text" name="title"
+           [(ngModel)]="newTodoTitle"
+           placeholder="Добавить, Название задания . . ."
+           autofocus
+           required autocomplete="off">
+    <!--
+      [(ngModel)]="newTodoTitle"  = делаем двустароннее связывание для временного хранения значения
+    -->
+    <!--<button type="submit" [disabled]="formInputVal.form.invalid">Добавить</button>-->
+    <button type="submit"
+            [disabled]="formInputVal.invalid">Добавить
+    </button>
+    <!--
+      [disabled]="formInputVal.form.invalid" = К свойству [disabled] укажем "ЛокальнаяПеременная" Которая ссылается
+      на обьект "form" у которого есть свойство Валидации "invalid"
+    -->
+    <input type="text" name="body" *ngIf="newTodoTitle"
+           [(ngModel)]="newTodoBody"
+           placeholder="Подробное Описание . . ." autofocus required autocomplete="off">
+</form>

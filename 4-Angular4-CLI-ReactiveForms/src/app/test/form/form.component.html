@@ -1,0 +1,26 @@
+<h1>TEST реактивная форма</h1>
+
+
+
+<form  class="price-form" (ngSubmit)="submit(); "
+       [formGroup]="myForm" novalidate>
+
+  <label [class]="myForm.controls['userName'].invalid && myForm.controls['userName'].dirty ? 'inputErr' : ''">
+    <input type="text" placeholder="Name" name="userName"
+           formControlName="userName" required>
+  </label>
+
+  <label [class]="myForm.controls['userEmail'].invalid && myForm.controls['userEmail'].dirty ? 'inputErr' : ''">
+    <input type="email" placeholder="E-mail" name="userEmail"
+           formControlName="userEmail" required>
+  </label>
+
+  <button mat-raised-button class="form-btn" [disabled]="myForm.controls['userEmail'].invalid || myForm.controls['userName'].invalid ">
+    <span>GET ESTIMATIONS AND FREE USERS</span>
+  </button>
+</form>
+
+
+
+
+<hr/><hr/><br/>

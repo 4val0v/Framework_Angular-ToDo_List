@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ToDo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AngularJS-todoList</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="../js/index_min.js"></script>
+</head>
+<body>
+
+<div class="content margin-bottom" ng-controller="todoController">
+  <div class="row">
+    <section class="col-md-8 col-center">
+      <div class="text-center">
+        <h1>Welcome to {{title}}!</h1>
+      </div>
+      <form   name="frm"   ng-submit="addTodo()"  class="margin-bottom">
+        <input  type="text"   name="newTodo" ng-model="newTodo"   class="form-control" placeholder="Добавить задание . . ." required>
+        <button ng-disabled="frm.$invalid"  class="btn btn-primary">Add</button>
+      </form>
+
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="todo in todos" ng-click="addInf">
+          <label>
+            <input type="checkbox" class="checkbox-inline" ng-model="todo.done" />
+          </label>
+          <label ng-class="{'done': todo.done}">{{todo.title}}</label>
+        </li>
+      </ul>
+      <button ng-click="clearCompleted()" class="btn btn-primary">clearCompleted</button>
+
+<!--
+            <div ng-if="selected_task">
+              <label>title: {{selected_task.title}}</label><br>
+              <label>details: {{selected_task.details}}</label><br>
+              <label>done: {{selected_task.done}}</label><br>
+            </div>
+-->
+    </section>
+  </div>
+</div>
+
+<script>
+
+  angular.module('ToDo',[]).
+  controller('todoController',['$scope',function ($scope) {
+    $scope.todos = [
+      {'title' : 'todo task 1', done : false},
+      {'title' : 'todo task 2', done : true},
+      {'title' : 'todo task 3', done : true},
+      {'title' : 'todo task 4', done : false}
+    ];
+    $scope.title ='my "Todo List" ';
+    $scope.addTodo = function () {
+      $scope.todos.push({'title':$scope.newTodo,'done':false});
+      $scope.newTodo = '';
+    };
+    $scope.clearCompleted = function() {
+      $scope.todos = $scope.todos.filter(function (item) {
+        return !item.done;
+      })
+    };
+    $scope.addInf = function () {}
+  }])
+
+</script>
+</body>
+</html>

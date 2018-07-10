@@ -1,0 +1,26 @@
+<h1>Вторая реактивная форма</h1>
+
+<form  class="price-form"
+       (ngSubmit)="formSent($event);
+                  formIdea.reset();
+                  invalidEmailInput.reset();
+                  invalidNameInput.reset();"
+       #formIdea="ngForm"
+       [formGroup]="formValid" novalidate>
+
+  <label [class]="invalidNameInput.invalid && invalidNameInput.dirty ? 'inputErr' : ''">
+    <input type="text" placeholder="Name" name="names"
+           formControlName="nameInput"
+           [(ngModel)]="formYourIdea.name" required>
+  </label>
+
+  <label [class]="invalidEmailInput.invalid && invalidEmailInput.dirty ? 'inputErr' : ''">
+    <input type="email" placeholder="E-mail" name="email"
+           formControlName="emailInput"
+           [(ngModel)]="formYourIdea.email" required>
+  </label>
+
+  <button mat-raised-button class="form-btn" ><span>GET ESTIMATIONS AND FREE USERS</span></button>
+</form>
+
+<hr/><hr/><br/>

@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  min-height: 56px;
+  padding: 0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.24);
+  color: white;
+}
+
+header img {
+  width: 50px;
+}
+
+header h1 {
+  font-weight: 400;
+  margin: 0 0 0 10px;
+}

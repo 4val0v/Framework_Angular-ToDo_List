@@ -1,0 +1,36 @@
+<form class="todo-form" (ngSubmit)="createTasks(); formInputVal.reset()"
+      #formInputVal="ngForm"
+      [formGroup]="formValidations" novalidate>
+  <!--
+    #formInputVal="ngForm" = добовляем локальную переменную в область видимости
+    formInputVal.reset() = вызываем сброс формы
+    [formGroup]="formValid" = связываем Модуль formGroup и обьект formValid
+    novalidate = отключаем стандартную валидацию
+  -->
+  <input type="text" name="title"
+         [(ngModel)]="formValid.title"
+         formControlName="inputTitle"
+         placeholder="Добавить, Название задания . . ." autofocus required autocomplete="off">
+
+  <div *ngIf="invalidNameInput.invalid && invalidNameInput.touched">
+    {{invalidNameInput.value}}
+  </div>
+  <!--
+    [(ngModel)]="newTodoTitle"  = делаем двустароннее связывание для временного хранения значения
+  -->
+  <!--<button type="submit" [disabled]="formInputVal.form.invalid">Добавить</button>-->
+  <button type="submit" [disabled]="formInputVal.invalid">Добавить</button>
+  <!--
+    [disabled]="formInputVal.form.invalid" = К свойству [disabled] укажем "ЛокальнаяПеременная" Которая ссылается
+    на обьект "form" у которого есть свойство Валидации "invalid"
+  -->
+  <input type="text" name="body"
+         *ngIf="formValid.title"
+         [(ngModel)]="formValid.body"
+         formControlName="inputBody"
+         placeholder="Подробное Описание . . ."
+         autofocus required autocomplete="off">
+  <div *ngIf="invalidEmailInput.invalid && invalidEmailInput.touched">
+    {{invalidEmailInput.value}}
+  </div>
+</form>
