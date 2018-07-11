@@ -1,5 +1,5 @@
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms'; // FormsModule в етом компоненте ненужен
+import {FormsModule} from '@angular/forms';
 
 import {TodoFormComponent} from './todo-form.component';
 import {TodoServiceService} from '../../_shared/_todo-service.service';
@@ -8,9 +8,18 @@ import {ObjectTypes} from '../../_shared/ObjectTypes';
 describe('TodoFormComponent', () => {
 
     let fixture: ComponentFixture<TodoFormComponent>;
-    let app;
-    let compiled;
     let component: TodoFormComponent;
+    let compiled;
+
+    const mockRepository = {
+        getProducts: function () {
+            return [
+                new ObjectTypes(1, 'test1', true, 'body1'),
+                new ObjectTypes(2, 'test2', false, 'body2'),
+                new ObjectTypes(3, 'test3', false, 'body3'),
+            ];
+        }
+    };
 
     const MockTestDB =  [
         {
@@ -52,23 +61,26 @@ describe('TodoFormComponent', () => {
                 TodoFormComponent, // декларируем проверяемый компонент
             ],
             providers: [
-                { provide: TodoServiceService, useClass: MockTodoService }
+                // https://habr.com/post/349380/
+                // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
+                { provide: TodoServiceService, useValue: MockTodoService }
             ]
         }).compileComponents();
     }));
 
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TodoFormComponent); // создать экземпляр компонента / Этот компонент является экземпляром нашего класса.
-        app = fixture.debugElement.componentInstance; // DebugElement, связанный с корневым элементом этого компонента. / Экземпляр корневого компонента.
-        compiled = fixture.debugElement.nativeElement; // DebugElement, связанный с корневым элементом этого компонента. / Нативный элемент в корне компонента.
-        component = fixture.componentInstance; // Экземпляр корневого компонента.
-        fixture.detectChanges();
+        fixture = TestBed.createComponent(TodoFormComponent); // создать экземпляр компонента.
+        component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
+        compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
+        fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
     });
 
     it('should Create TodoFormComponent', async(() => {
-        expect(app).toBeTruthy();
+        expect(component).toBeTruthy();
     }));
+
+/*
 
     // нужно подминить сервис на тестируемый.
     it(`should Create NEW Task`, async(() => {
@@ -83,6 +95,7 @@ describe('TodoFormComponent', () => {
 
         // expect(objList.length + 1).toBe(objList.length + 1); // state after click
     }));
+*/
 
 });
 

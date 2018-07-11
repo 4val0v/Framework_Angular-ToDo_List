@@ -42,9 +42,12 @@ testem.log
 Thumbs.db
 package-lock.json
 /package-lock.json
-/NOT-WORKS   - - - - 5-Angular4-login-registration
-NOT-WORKS   - - - - 5-Angular4-login-registration/
-/angular_testing-components
 .directory
 /.git
 .git
+
+# Навести порядок в дерикториях
+/NOT-WORKS   - - - - 5-Angular4-login-registration
+NOT-WORKS   - - - - 5-Angular4-login-registration/
+/angular_testing-components
+/6-Angular4-CLI-login_registration

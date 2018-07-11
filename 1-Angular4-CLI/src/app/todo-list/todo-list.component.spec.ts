@@ -2,20 +2,15 @@ import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing'; // для router-outlet
 import {FormsModule} from '@angular/forms'; // для привязки типо [(ngModel)]
 
-import { TodoListComponent } from './todo-list.component'; // для проверяемый компонент
+import {TodoListComponent} from './todo-list.component';
 
 describe('TodoListComponent', () => {
 
   let fixture: ComponentFixture<TodoListComponent>;
-  let app;
-  let compiled;
   let component: TodoListComponent;
+  let compiled;
 
-// Используется перед каждым запуском теста
-//// Для тестов необходимо, чтобы компоненты скомпилировались до того, как через метод createComponent() будут созданы их экземпляры.
   beforeEach(
-//// Поэтому тело первого BeforeEach мы поместили в asynс метод, благодаря чему его содержимое выполняется в специальной асинхронной среде.
-//// И пока не будет выполнен метод compileComponents(), следующий BeforeEach не запустится:
     async(() => {
       TestBed.configureTestingModule({
         imports: [
@@ -23,31 +18,30 @@ describe('TodoListComponent', () => {
           FormsModule // декларируем привязки типо [(ngModel)]
         ],
         declarations: [
-          TodoListComponent, // декларируем проверяемый компонент
+          TodoListComponent,
         ]
-      }).compileComponents(); // compileComponents — метод, делающий вынесенные в отдельные файлы стили и шаблон встроенными.
+      }).compileComponents();
     })
   );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoListComponent); // создать экземпляр компонента.
-    app = fixture.debugElement.componentInstance; //  Экземпляр корневого компонента.
-    compiled = fixture.debugElement.nativeElement; // Нативный элемент в корне компонента.
-    component = fixture.componentInstance; // Экземпляр корневого компонента.
-    fixture.detectChanges(); // detectChanges - мы инициализируем компонент.
+    component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
+    compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
+    fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
   });
 
   it('should Create TodoListComponent', async(() => {
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
 
   it(`should "Unchecked" Fist tasks`, async(() => {
     const objList = component.ObjectTodos[0]; // obj from "src/app/shared/data.ts'
 
-    expect(objList.completed).toBeTruthy(); // default state in data "src/app/shared/data.ts'
+    expect(objList.completed).toBeTruthy(); // default state
 
     component.onCheck(objList);
-    fixture.detectChanges(); // detectChanges - мы инициализируем компонент.
+    fixture.detectChanges();
 
     expect(objList.completed).toBeFalsy(); // state after click
   }));
