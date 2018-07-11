@@ -20,7 +20,7 @@ import 'rxjs/add/operator/toPromise'; // из библиотеки "rxjs" нам
  */
 @Injectable()
 export class TodoServiceService {
-
+// тестирование @Input/@Output http://www.vincecampanale.com/blog/2018/03/22/testing-custom-events-angular/
   private apiUrl = 'api/_BD'; // адрес откуда будут приходить данные
 
   // bd: ObjectTypes[] = _BD;  // получаем данные с Базы Данных (BD вариант 1)

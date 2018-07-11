@@ -1,3 +1,9 @@
+/**
+ * Модульный тест применяется для тестирования одной логически выделенной и изолированной единицы системы.
+ * Чаще всего это метод класса или простая функция (хотя я допускаю и весь класс).
+ * Изолированность тестируемой единицы достигается при помощи Заглушек (Stubs, Dummies) и Макетов (Mockups).
+ */
+
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing'; // декларируем router-outlet
 import {FormsModule} from '@angular/forms'; // для привязки типо [(ngModel)] и для дочерних компонентов если не будут игнорироватся.

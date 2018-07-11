@@ -34,7 +34,7 @@ export class TodoServiceService {
      * @constructor
      */
     CheckTodo(checkbox: ObjectTypes) {
-        console.log('Checkbox : ', checkbox.title);
+        console.log('CheckTodo Tasks : ', checkbox);
         checkbox.completed = !checkbox.completed;
     }
 
@@ -44,8 +44,7 @@ export class TodoServiceService {
      * @constructor
      */
     DeleteTodo(del: ObjectTypes) {
-
-        console.log('Delete : ', del.title);
+        console.log('DeleteTodo Tasks : ', del);
         const index = this.bd.indexOf(del);
         if (index > -1) {
             this.bd.splice(index, 1);
@@ -60,7 +59,7 @@ export class TodoServiceService {
      */
     CreateTodo(title, body) {
         // поскольку нам нужно создавать еще обьект, то нужно добавить конструктор в класс ObjectTypes
-        console.log('Create Tasks : ', title);
+        console.log('CreateTodo Tasks : ', title);
         this.bd.push(new ObjectTypes(this.bd.length, title, false, body));
         // console.log(this.bd);
     }

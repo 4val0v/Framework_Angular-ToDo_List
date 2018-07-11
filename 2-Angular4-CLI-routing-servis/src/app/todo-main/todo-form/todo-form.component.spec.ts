@@ -11,48 +11,27 @@ describe('TodoFormComponent', () => {
     let component: TodoFormComponent;
     let compiled;
 
-    const mockRepository = {
+    // фейковый сервис
+    const mockService = {
+        bd: [],
+        CreateTodo: function (title: string, body: string) {
+            console.log('Create TEST Tasks :  работает фейковый сервер');
+
+            const newTask = { 'id': this.bd.length, 'title': title, 'body': body };
+            this.bd.push( newTask );
+
+            console.log( 'Create TEST Tasks : ', this.bd );
+
+            return this.bd;
+        },
         getProducts: function () {
             return [
-                new ObjectTypes(1, 'test1', true, 'body1'),
-                new ObjectTypes(2, 'test2', false, 'body2'),
-                new ObjectTypes(3, 'test3', false, 'body3'),
+                new ObjectTypes(1, 'test1', true, 'body'),
+                new ObjectTypes(2, 'test2', false, 'body'),
+                new ObjectTypes(3, 'test3', false, 'body'),
             ];
         }
     };
-
-    const MockTestDB =  [
-        {
-            id: 0,
-            title: '1 learning HTML/CSS',
-            completed : true,
-            body: 'Great'
-        },
-        {
-            id: 1,
-            title: '2 learning JavaScript',
-            completed : true,
-            body: 'Ideally'
-        },
-        {
-            id: 2,
-            title: '3 learning Angular CLI',
-            completed : false,
-            body: 'Angular CLI - Perfectly'
-        },
-        {
-            id: 3,
-            title: '4 learning ReactJS',
-            completed : false,
-            body: 'in perspective'
-        }
-    ];
-
-    class MockTodoService {
-        public getDateBaseTodos() {
-            return MockTestDB;
-        }
-    }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -63,8 +42,12 @@ describe('TodoFormComponent', () => {
             providers: [
                 // https://habr.com/post/349380/
                 // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
-                { provide: TodoServiceService, useValue: MockTodoService }
+                {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
             ]
+            // Мокирование : не стоит использовать в тесте настоящие экземпляры зависимостей
+            // - если внутренняя логика зависимости изменится, придется переписывать сразу два теста — нашего сервиса и зависимости
+            // - придется мокировать зависимость второго порядка.
+            // - зависимости тянут за собой другие зависимости а они могут быть тяжелыми и ресурсоемкими
         }).compileComponents();
     }));
 
@@ -76,26 +59,25 @@ describe('TodoFormComponent', () => {
         fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
     });
 
+
     it('should Create TodoFormComponent', async(() => {
         expect(component).toBeTruthy();
     }));
 
-/*
-
-    // нужно подминить сервис на тестируемый.
     it(`should Create NEW Task`, async(() => {
-        component.newTodoTitle = 'NEW Title Task';
-        component.newTodoTitle = 'NEW Body Task';
+        component.newTodoTitle = 'TEST NEW Task Title';
+        component.newTodoBody = 'TEST NEW Task Body';
 
-        const listTitle = component.newTodoTitle;
-        const listBody = component.newTodoBody;
+        const asd = spyOn(component, 'createTasks');
 
         component.createTasks();
+
+        expect(asd).toHaveBeenCalled();
+
         fixture.detectChanges();
 
-        // expect(objList.length + 1).toBe(objList.length + 1); // state after click
+        // mockService.CreateTodo( 'title', 'body');
+        // console.log(mockService.bd);
     }));
-*/
 
 });
-

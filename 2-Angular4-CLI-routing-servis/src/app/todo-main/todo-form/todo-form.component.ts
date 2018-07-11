@@ -10,9 +10,7 @@ export class TodoFormComponent {
     newTodoTitle = '';
     newTodoBody = '';
 
-    constructor(private todoService: TodoServiceService) {
-        // this.todoService = [];
-    }
+    constructor(private todoService: TodoServiceService) {}
 
     createTasks() {
         this.todoService.CreateTodo(this.newTodoTitle, this.newTodoBody);
