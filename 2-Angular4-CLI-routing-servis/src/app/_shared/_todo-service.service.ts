@@ -19,9 +19,11 @@ import {ObjectTypes} from './ObjectTypes'; // типизируем данные
 @Injectable()
 export class TodoServiceService {
 
-    bd: ObjectTypes[] = _BD;
+    bd: ObjectTypes[];
 
-    constructor() {}
+    constructor() {
+        this.bd = _BD;
+    }
 
     /** метод получения данных, тут мы настраиваем откуда мы получим данные */
     getDateBaseTodos(): ObjectTypes[] {

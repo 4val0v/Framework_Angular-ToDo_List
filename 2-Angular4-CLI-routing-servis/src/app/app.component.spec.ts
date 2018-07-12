@@ -13,8 +13,8 @@ import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
 
-    let component: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
+    let component: AppComponent;
     let compiled;
 
     beforeEach(
