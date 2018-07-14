@@ -1,5 +1,14 @@
-import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
+import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { Location, CommonModule } from '@angular/common';
+/*
+    зависимости для routerLink тестирования
+    =  https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
+*/
+import {RouterTestingModule} from '@angular/router/testing';
+import {Router} from '@angular/router';
+import {By} from '@angular/platform-browser';
 
 import {TodoListComponent} from './todo-list.component';
 import {TodoServiceService} from '../../_shared/_todo-service.service';
@@ -11,89 +20,121 @@ describe('TodoListComponent', () => {
     let component: TodoListComponent;
     let compiled;
 
-    // фейковый сервис
+    /* фейковый сервис */
     const mockService = {
         bd: [
             {
                 id: 0,
                 title: 'TEST - - HTML/CSS',
-                completed : true,
+                completed: true,
                 body: 'TEST'
             },
             {
                 id: 1,
                 title: 'TEST - - JavaScript',
-                completed : true,
+                completed: true,
                 body: 'Ideally'
             }
         ],
-        getDateBaseTodos: function() {
+        getDateBaseTodos: function () {
+            console.log('- TEST  "getBase" :  работает фейковый сервер');
             return this.bd;
         },
-        CheckTodo: function ( checkbox: ObjectTypes ) {
-            console.log('Check TEST Todo :  работает фейковый сервер');
+        CheckTodo: function (checkbox: ObjectTypes) {
+            console.log('- TEST "Check" :  работает фейковый сервер');
+            let base = this.bd;
 
-            this.bd[0] = !checkbox.completed;
-
-            return this.bd;
+            base[checkbox.id].completed = !checkbox.completed;
+            return this.bd = base;
+            // return checkbox.completed = !checkbox.completed;
         },
-        DeleteTodo: function ( del: ObjectTypes ) {
-            console.log('Delete TEST Todo :  работает фейковый сервер');
-
-            const index = this.bd.indexOf(del);
+        DeleteTodo: function (del: ObjectTypes) {
+            console.log('- TEST "Delete":  работает фейковый сервер');
+            let base = this.bd;
+            const index = base.indexOf(del);
             if (index > -1) {
-                this.bd.splice(index, 1);
+                base.splice(index, 1);
+                return this.bd = base;
             }
         }
     };
+    /* фейковый сервис */
 
-    beforeEach(
-        async(() => {
-            TestBed.configureTestingModule({
-                imports: [ FormsModule ],
-                declarations: [ TodoListComponent ],
-                providers: [
-                    // https://habr.com/post/349380/
-                    // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
-                    {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
-                ]
-            }).compileComponents();
-        })
-    );
+    // тестовый компонент для перехода по урлам, для теста routerLink
+    @Component({
+        template: ''
+    })
+    class DummyComponent {}
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TodoListComponent); // создать экземпляр компонента.
-        component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
-        compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
-        fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
-    });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    // Настраиваем параметры роутинга
+                    // https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
+                    { path: 'todo/:id', component: DummyComponent }
+                ])
+            ],
+            declarations: [TodoListComponent, DummyComponent],
+            providers: [
+                // https://habr.com/post/349380/
+                // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
+                {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
+            ]
+        });
+
+        TestBed
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(TodoListComponent);
+                component = fixture.debugElement.componentInstance;
+                compiled = fixture.debugElement.nativeElement;
+                fixture.detectChanges();
+            });
+    }));
+
 
     it('should Create TodoListComponent', async(() => {
+        console.log('- TEST "Create" TodoListComponent success');
+
         expect(component).toBeTruthy();
     }));
 
-    it(`should "Unchecked" Fist tasks`, async(() => {
-        const objList = component.ObjectTodos[0];
+    it(`should press "Unchecked" Fist tasks`, async(() => {
+        console.log('- TEST "Unchecked" TodoListComponent success');
 
+        const objList = component.ObjectTodos[0];
         const asd = spyOn(component, 'onCheck'); // https://habr.com/post/169699/
-
+        // используется фейковый сервис в котором и вызывается this.todoService.CheckTodo(checkbox);
         component.onCheck(component.ObjectTodos, objList);
-
-        fixture.detectChanges();
-
+        // component.ngOnInit();
         expect(asd).toHaveBeenCalled();
+        fixture.detectChanges();
     }));
 
-    it(`should "Delete" Fist tasks`, async(() => {
+    it(`should press "Delete" Fist tasks`, async(() => {
+        console.log('- TEST "Delete" TodoListComponent success');
+
         const objList = component.ObjectTodos[0];
-
         const asd = spyOn(component, 'onDelete'); // https://habr.com/post/169699/
-
+        // подставится фейковый сервис в нутри етой функции "onDelete"
         component.onDelete(component.ObjectTodos, objList);
-
-        fixture.detectChanges();
-
+        // component.ngOnInit();
         expect(asd).toHaveBeenCalled();
+        fixture.detectChanges();
     }));
 
+    it('should go to url', async(
+            inject([Router, Location], (router: Router, location: Location) => {
+                console.log('- TEST "[routerLink]" TodoListComponent success');
+
+                fixture.debugElement.query(By.css('a')).nativeElement.click(); // имитация нажатия
+                fixture.whenStable().then(() => {
+                    // переходит по первому линку поетому первый елемент масива 0 и незабываем что унас фейковый сервис
+                    expect(location.path()).toEqual('/todo/0');
+                });
+            })
+    ));
 });

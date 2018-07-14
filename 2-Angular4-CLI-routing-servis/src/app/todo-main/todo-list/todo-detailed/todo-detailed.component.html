@@ -1,8 +1,12 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <!--Todo: {{ ObjectTodo | json }} - сделать нормальный вывод -->
-      {{ ObjectTodo | json }}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <!--Todo: сделать нормальный вывод - {{ ObjectTodo | json }}-->
+            <pre>{{ObjectTodo | json}}</pre>
+        </div>
+        <button type="submit" (click)="returnHistory()"
+                style="float: right;
+                   margin: 20px 20px 50px 20px">return Beck
+        </button>
     </div>
-  </div>
 </div>

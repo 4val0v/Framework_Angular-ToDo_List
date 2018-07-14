@@ -20,8 +20,6 @@ describe('TodoFormComponent', () => {
             const newTask = {'id': this.bd.length, 'title': title, 'body': body};
             this.bd.push(newTask);
 
-            console.log('Create TEST Tasks : ', this.bd);
-
             return this.bd;
         },
         getProducts: function () {
@@ -49,11 +47,39 @@ describe('TodoFormComponent', () => {
                 // - если внутренняя логика зависимости изменится, придется переписывать сразу два теста — нашего сервиса и зависимости
                 // - придется мокировать зависимость второго порядка.
                 // - зависимости тянут за собой другие зависимости а они могут быть тяжелыми и ресурсоемкими
-            }).compileComponents();
+            });
+
+            TestBed.compileComponents()
+                .then(() => {
+                    fixture = TestBed.createComponent(TodoFormComponent); // создать экземпляр компонента.
+                    component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
+                    compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
+                    fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
+                });
         })
     );
 
+/*
 
+    beforeEach(
+        async(() => {
+            TestBed.configureTestingModule({
+                imports: [FormsModule],
+                declarations: [
+                    TodoFormComponent, // декларируем проверяемый компонент
+                ],
+                providers: [
+                    // https://habr.com/post/349380/
+                    // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
+                    {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
+                ]
+                // Мокирование : не стоит использовать в тесте настоящие экземпляры зависимостей
+                // - если внутренняя логика зависимости изменится, придется переписывать сразу два теста — нашего сервиса и зависимости
+                // - придется мокировать зависимость второго порядка.
+                // - зависимости тянут за собой другие зависимости а они могут быть тяжелыми и ресурсоемкими
+            }).compileComponents();
+        })
+    );
     beforeEach(() => {
         fixture = TestBed.createComponent(TodoFormComponent); // создать экземпляр компонента.
         component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
@@ -61,21 +87,23 @@ describe('TodoFormComponent', () => {
         fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
     });
 
+*/
 
     it('should Create TodoFormComponent', async(() => {
+        console.log('- TEST "Create" TodoFormComponent success');
+
         expect(component).toBeTruthy();
     }));
 
     it(`should Create NEW Task`, async(() => {
+        console.log('- TEST "Create NEW Task" TodoFormComponent success');
+
         component.newTodoTitle = 'TEST NEW Task Title';
         component.newTodoBody = 'TEST NEW Task Body';
 
         const asd = spyOn(component, 'createTasks'); // https://habr.com/post/169699/
-
         component.createTasks();
-
         expect(asd).toHaveBeenCalled();
-
         fixture.detectChanges();
 
         // mockService.CreateTodo( 'title', 'body');

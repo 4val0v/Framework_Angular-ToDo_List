@@ -13,13 +13,21 @@ import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-
 
 const MyAppRoutes: Routes = [
   {
-    path : '',                    // путь по которому сработае наш роут
-    component: TodoMainComponent  // что нам покажет когда сработает
+    path : '',                     // путь по которому сработае наш роут
+    component: TodoMainComponent,  // что нам покажет когда сработает
+    pathMatch: 'full'
   },
   {
     path : 'todo/:id',                // путь по которому сработае наш роут
     component: TodoDetailedComponent  // что нам покажет когда сработает
-  }
+  },
+  {
+    path: 'todo',
+    redirectTo: '',     // роут на который перекинет обработку
+    pathMatch: 'full'
+  },
+  // { path: '**', component: TodoMainComponent } // любое не совпадение с роутом обработает етот роут
+  { path: '**',  redirectTo: '', } // ну или перенаправим
 ];
 
 @NgModule({

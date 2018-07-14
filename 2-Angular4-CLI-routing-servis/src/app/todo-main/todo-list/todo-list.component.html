@@ -10,7 +10,12 @@
 
 
         <div class="actions">
-            <a href="todo/{{ task.id }}" class="icon open-todo">
+            <!-- №1 - неправельно хоть и отработает - <a href="todo/{{task.id}}" class="icon open-todo">-->
+            <a routerLink="todo/{{task.id}}" class="icon open-todo">
+                <!-- № 2 и 3 правильно
+                    <a routerLink="todo/{{task.id}}" >
+                    <a [routerLink]="'todo/'+task.id" >
+                -->
                 <i class="material-icons">open_in_new</i>
             </a>
             <button class="delete icon" (click)="onDelete(ObjectTodos, task)">

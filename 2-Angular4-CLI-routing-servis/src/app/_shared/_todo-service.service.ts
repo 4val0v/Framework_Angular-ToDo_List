@@ -26,8 +26,14 @@ export class TodoServiceService {
     }
 
     /** метод получения данных, тут мы настраиваем откуда мы получим данные */
-    getDateBaseTodos(): ObjectTypes[] {
-        return this.bd;
+    getDateBaseTodos(id = '') {
+        console.info('Service - getBase Tasks');
+
+        if (id === '') {
+            return this.bd;
+        } else {
+            return this.bd[id];
+        }
     }
 
     /**
@@ -36,7 +42,8 @@ export class TodoServiceService {
      * @constructor
      */
     CheckTodo(checkbox: ObjectTypes) {
-        console.log('CheckTodo Tasks : ', checkbox);
+        console.info('Service - CheckTodo Tasks : ', checkbox);
+
         checkbox.completed = !checkbox.completed;
     }
 
@@ -46,7 +53,8 @@ export class TodoServiceService {
      * @constructor
      */
     DeleteTodo(del: ObjectTypes) {
-        console.log('DeleteTodo Tasks : ', del);
+        console.info('Service - DeleteTodo Tasks : ', del);
+
         const index = this.bd.indexOf(del);
         if (index > -1) {
             this.bd.splice(index, 1);
@@ -61,8 +69,9 @@ export class TodoServiceService {
      */
     CreateTodo(title, body) {
         // поскольку нам нужно создавать еще обьект, то нужно добавить конструктор в класс ObjectTypes
-        console.log('CreateTodo Tasks : ', title);
+        console.info('Service - CreateTodo Tasks : ', title);
+
         this.bd.push(new ObjectTypes(this.bd.length, title, false, body));
-        // console.log(this.bd);
+        // console.info(this.bd);
     }
 }
