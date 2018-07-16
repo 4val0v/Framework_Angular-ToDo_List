@@ -40,14 +40,18 @@ describe('TodoServiceService', () => {
         })
     );
 
-
+    /**
+     * ТЕСТ активации сервиса
+     */
     it('should be created TodoServiceService', async(() => {
         console.log('- TEST "created" TodoServiceService success');
 
         expect(service).toBeTruthy();
     }));
 
-
+    /**
+     * ТЕСТ получения бд данных
+     */
     it('should return arr base', () => {
         console.log('- TEST "return base" TodoServiceService success');
 
@@ -55,7 +59,9 @@ describe('TodoServiceService', () => {
         expect(languages.length).toEqual(4);
     });
 
-
+    /**
+     * ТЕСТ изменения отмеченного 1го листа в фейковой бд
+     */
     it(`should "Unchecked" Fist tasks`, async(() => {
         console.log('- TEST "Unchecked" TodoServiceService success');
 
@@ -64,8 +70,10 @@ describe('TodoServiceService', () => {
         expect(objList[0].completed).toBeFalsy(); // state after click
     }));
 
-
-    it(`should "Check" Fist tasks`, async(() => {
+    /**
+     * ТЕСТ изменения отмеченного 2го листа в фейковой бд
+     */
+    it(`should "Check" second tasks`, async(() => {
         console.log('- TEST "Check" TodoServiceService success');
 
         expect(objList[1].completed).toBeFalsy(); // default state
@@ -73,29 +81,30 @@ describe('TodoServiceService', () => {
         expect(objList[1].completed).toBeTruthy(); // state after click
     }));
 
-
-    it(`should "Delete" Last tasks`, async(() => {
+    /**
+     * ТЕСТ удаления 4го листа
+     */
+    it(`should "Delete" Last(#4) tasks`, async(() => {
         console.log('- TEST "Delete" TodoServiceService ');
-        const coutTasks = service.bd.length;
+
+        const serviceBD = service.getDateBaseTodos();
+        const coutTasks = serviceBD.length;
         // удаляем не 1й елемент потому что следуйший тест (the link should be displayed with the correct URL) в todo-main завалится.
-        service.DeleteTodo(service.bd[coutTasks - 1]);
-        expect(service.bd.length).toEqual(coutTasks - 1);
+        service.DeleteTodo(serviceBD[coutTasks - 1]);
+        expect(serviceBD.length).toEqual(coutTasks - 1);
     }));
 
-/*
-    /!**
-     * Проверка сохранения нового листа
-     * в браузере все ок, в консоле Ошибка.
-     *!/
+    /**
+     * ТЕСТ сохранения нового листа
+     */
     it(`should "CreateTodo" New Todo`, async( () => {
+        console.log('- TEST "CreateTodo" TodoServiceService ');
 
+        const coutTasks = service.bd.length; // количество тасков до создания нового
         service.CreateTodo('New Title Todo', 'Body Todo');
 
-        console.log(service.bd);
-
-        expect(service.bd.length).toEqual(5);
+        expect(service.bd.length).toEqual(coutTasks + 1);
     }));
-*/
 
 });
 
