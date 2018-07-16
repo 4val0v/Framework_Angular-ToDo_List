@@ -4,11 +4,11 @@
   <!--
     #formInputVal="ngForm" = добовляем локальную переменную в область видимости
     formInputVal.reset() = вызываем сброс формы
-    [formGroup]="formValid" = связываем Модуль formGroup и обьект formValid
+    [formGroup]="formObjectValid" = связываем Модуль formGroup и обьект formObjectValid
     novalidate = отключаем стандартную валидацию
   -->
   <input type="text" name="title"
-         [(ngModel)]="formValid.title"
+         [(ngModel)]="formObjectValid.title"
          formControlName="inputTitle"
          placeholder="Добавить, Название задания . . ." autofocus required autocomplete="off">
 
@@ -25,8 +25,8 @@
     на обьект "form" у которого есть свойство Валидации "invalid"
   -->
   <input type="text" name="body"
-         *ngIf="formValid.title"
-         [(ngModel)]="formValid.body"
+         *ngIf="formObjectValid.title"
+         [(ngModel)]="formObjectValid.body"
          formControlName="inputBody"
          placeholder="Подробное Описание . . ."
          autofocus required autocomplete="off">

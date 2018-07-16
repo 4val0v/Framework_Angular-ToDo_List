@@ -1,11 +1,12 @@
+/*
 import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { Location, CommonModule } from '@angular/common';
-/*
+/!*
     зависимости для routerLink тестирования
     =  https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
-*/
+*!/
 import {RouterTestingModule} from '@angular/router/testing';
 import {Router} from '@angular/router';
 import {By} from '@angular/platform-browser';
@@ -20,7 +21,7 @@ describe('TodoListComponent', () => {
     let component: TodoListComponent;
     let compiled;
 
-    /* фейковый сервис */
+    /!* фейковый сервис *!/
     const mockService = {
         bd: [
             {
@@ -58,7 +59,7 @@ describe('TodoListComponent', () => {
             }
         }
     };
-    /* фейковый сервис */
+    /!* фейковый сервис *!/
 
     // тестовый компонент для перехода по урлам, для теста routerLink
     @Component({
@@ -138,3 +139,4 @@ describe('TodoListComponent', () => {
             })
     ));
 });
+*/

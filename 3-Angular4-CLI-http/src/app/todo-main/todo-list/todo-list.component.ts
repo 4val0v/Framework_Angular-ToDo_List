@@ -5,7 +5,7 @@ import { ObjectTypes } from '../../_shared/ObjectTypes';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  styleUrls: ['./todo-list.component.styl']
 })
 export class TodoListComponent implements OnInit {
 
@@ -27,7 +27,8 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit() { // метод который ангуляр вызовет в определенный момент https://angular.io/guide/lifecycle-hooks
     // this.ObjectTodos = this.todoService.getDateBaseTodos();     // (BD вариант 1)
-    this.todoService.getDateBaseTodos().then( _BD => this.ObjectTodos = _BD );    // (HTTP вариант 2)
+    this.todoService.getDateBaseTodos()
+      .then( _BD => this.ObjectTodos = _BD );    // (HTTP вариант 2)
   }
 
   onCheck(checkbox: ObjectTypes) {

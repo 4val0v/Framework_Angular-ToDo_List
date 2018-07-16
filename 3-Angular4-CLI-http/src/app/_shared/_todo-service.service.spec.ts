@@ -1,3 +1,4 @@
+/*
 import {TestBed, inject, async} from '@angular/core/testing';
 
 import {TodoServiceService} from './_todo-service.service';
@@ -30,28 +31,28 @@ describe('TodoServiceService', () => {
         })
     );
     beforeEach(
-        /**
+        /!**
          * inject - Позволяет вводить зависимости в beforeEach() и it().
          * @info https://angular.io/api/core/testing/inject
          * @info https://docs.angularjs.org/api/ngMock/function/angular.mock.inject
-         */
+         *!/
         inject([TodoServiceService], ts => {
             service = ts;
         })
     );
 
-    /**
+    /!**
      * ТЕСТ активации сервиса
-     */
+     *!/
     it('should be created TodoServiceService', async(() => {
         console.log('- TEST "created" TodoServiceService success');
 
         expect(service).toBeTruthy();
     }));
 
-    /**
+    /!**
      * ТЕСТ получения бд данных
-     */
+     *!/
     it('should return arr base', () => {
         console.log('- TEST "return base" TodoServiceService success');
 
@@ -59,9 +60,9 @@ describe('TodoServiceService', () => {
         expect(languages.length).toEqual(4);
     });
 
-    /**
+    /!**
      * ТЕСТ изменения отмеченного 1го листа в фейковой бд
-     */
+     *!/
     it(`should "Unchecked" Fist tasks`, async(() => {
         console.log('- TEST "Unchecked" TodoServiceService success');
 
@@ -70,9 +71,9 @@ describe('TodoServiceService', () => {
         expect(objList[0].completed).toBeFalsy(); // state after click
     }));
 
-    /**
+    /!**
      * ТЕСТ изменения отмеченного 2го листа в фейковой бд
-     */
+     *!/
     it(`should "Check" second tasks`, async(() => {
         console.log('- TEST "Check" TodoServiceService success');
 
@@ -81,9 +82,9 @@ describe('TodoServiceService', () => {
         expect(objList[1].completed).toBeTruthy(); // state after click
     }));
 
-    /**
+    /!**
      * ТЕСТ удаления 4го листа
-     */
+     *!/
     it(`should "Delete" Last(#4) tasks`, async(() => {
         console.log('- TEST "Delete" TodoServiceService ');
 
@@ -94,9 +95,9 @@ describe('TodoServiceService', () => {
         expect(serviceBD.length).toEqual(coutTasks - 1);
     }));
 
-    /**
+    /!**
      * ТЕСТ сохранения нового листа
-     */
+     *!/
     it(`should "CreateTodo" New Todo`, async( () => {
         console.log('- TEST "CreateTodo" TodoServiceService ');
 
@@ -110,3 +111,4 @@ describe('TodoServiceService', () => {
 
 
 
+*/
