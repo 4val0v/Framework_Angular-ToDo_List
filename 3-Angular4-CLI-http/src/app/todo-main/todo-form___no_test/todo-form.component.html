@@ -10,7 +10,7 @@
   <input type="text" name="title"
          [(ngModel)]="formObjectValid.title"
          formControlName="inputTitle"
-         placeholder="Добавить, Название задания . . ." autofocus required autocomplete="off">
+         placeholder="Добавить, Название задания todo-form___no_test. . ." autofocus required autocomplete="off">
 
   <div *ngIf="invalidNameInput.invalid && invalidNameInput.touched">
     {{invalidNameInput.value}}
@@ -28,7 +28,7 @@
          *ngIf="formObjectValid.title"
          [(ngModel)]="formObjectValid.body"
          formControlName="inputBody"
-         placeholder="Подробное Описание . . ."
+         placeholder="Подробное Описание todo-form___no_test . . ."
          autofocus required autocomplete="off">
   <div *ngIf="invalidEmailInput.invalid && invalidEmailInput.touched">
     {{invalidEmailInput.value}}

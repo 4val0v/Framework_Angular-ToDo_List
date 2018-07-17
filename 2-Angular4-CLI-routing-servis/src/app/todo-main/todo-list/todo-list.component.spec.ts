@@ -79,20 +79,22 @@ describe('TodoListComponent', () => {
             ],
             declarations: [TodoListComponent, DummyComponent],
             providers: [
+                // подставной сервис и бек
+                // =  https://stackoverflow.com/questions/39472364/testing-cant-resolve-all-parameters-for-classname/39483673#39483673
+                // https://stackoverflow.com/questions/40003575/angular-2-error-no-provider-for-http-in-karma-jasmine-test
+                // {prototype:ProjectService, provide: ProjectsModule, useValue: mockRepository}
                 // https://habr.com/post/349380/
                 // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
                 {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
             ]
+        })
+        .compileComponents()
+        .then(() => {
+            fixture = TestBed.createComponent(TodoListComponent);
+            component = fixture.debugElement.componentInstance;
+            compiled = fixture.debugElement.nativeElement;
+            fixture.detectChanges();
         });
-
-        TestBed
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TodoListComponent);
-                component = fixture.debugElement.componentInstance;
-                compiled = fixture.debugElement.nativeElement;
-                fixture.detectChanges();
-            });
     }));
 
 

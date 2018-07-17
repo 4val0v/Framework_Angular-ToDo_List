@@ -7,83 +7,55 @@
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing'; // декларируем router-outlet
 import {FormsModule} from '@angular/forms'; // для привязки типо [(ngModel)] и для дочерних компонентов если не будут игнорироватся.
-import {NO_ERRORS_SCHEMA} from '@angular/core'; // игнорирование селекторов подключаемых компонентов.
 
 import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
 
-    let fixture: ComponentFixture<AppComponent>;
-    let component: AppComponent;
-    let compiled;
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let compiled;
 
 
-    beforeEach(
-        async(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    RouterTestingModule, // декларируем router-outlet
-                    FormsModule // декларируем привязки типо [(ngModel)]
-                ],
-                declarations: [
-                    AppComponent, // декларируем тестируемый компонент
-                ]
-            });
-
-            TestBed.compileComponents()
-                .then(() => {
-                    fixture = TestBed.createComponent(AppComponent); // создать экземпляр компонента.
-                    component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
-                    compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
-                    fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
-                });
-        })
-    );
-
-/*    // Ну или раделить так :
-
-    beforeEach(
-        async(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    RouterTestingModule, // декларируем router-outlet
-                    FormsModule // декларируем привязки типо [(ngModel)]
-                ],
-                declarations: [
-                    AppComponent, // декларируем тестируемый компонент
-                ]
-            }).compileComponents();
-        })
-    );
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AppComponent); // создать экземпляр компонента.
-        component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
-        compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
-        fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
-    });
-
-    */
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          RouterTestingModule, // декларируем router-outlet
+          FormsModule // декларируем привязки типо [(ngModel)]
+        ],
+        declarations: [
+          AppComponent, // декларируем тестируемый компонент
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(AppComponent); // создать экземпляр компонента.
+          component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
+          compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
+          fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
+        });
+    })
+  );
 
 
-
-    it('should create the app', async(() => {
-        expect(component).toBeTruthy();
-        console.log('- TEST "created" app success');
-    }));
-
-
-    it(`should have as title ' 2Do'`, async(() => {
-        expect(component.title).toEqual(' 2Do');
-        console.log('- TEST "title" app success');
-    }));
+  it('should create the app', async(() => {
+    expect(component).toBeTruthy();
+    console.log('- TEST "created" app success');
+  }));
 
 
-    it('should render title in a h1 tag', async(() => {
-        fixture.detectChanges();
-        expect(compiled.querySelector('h1').textContent).toContain('Angular  2Do!');
-        console.log('- TEST "title in a h1" app success');
-    }));
+  it(`should have as title ' 2Do'`, async(() => {
+    expect(component.title).toEqual(' 2Do');
+    console.log('- TEST "title" app success');
+  }));
+
+
+  it('should render title in a h1 tag', async(() => {
+    fixture.detectChanges();
+    expect(compiled.querySelector('h1').textContent).toContain('Angular  2Do!');
+    console.log('- TEST "title in a h1" app success');
+  }));
 
 // TestBed - предоставляет :
 // configureTestingModule - Метод используется для настройки тестового модуля Angular

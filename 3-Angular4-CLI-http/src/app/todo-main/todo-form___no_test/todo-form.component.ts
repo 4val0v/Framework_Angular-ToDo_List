@@ -5,11 +5,11 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 
 @Component({
-  selector: 'app-todo-form',
+  selector: 'app-todo-form___no_test',
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.styl']
 })
-export class TodoFormComponent {
+export class TodoFormComponent___no_test {
   formObjectValid: ObjectTypes;
 
 
@@ -28,7 +28,14 @@ export class TodoFormComponent {
     ])
   });
 
-  constructor(private todoService: TodoServiceService) {}
+  constructor(private todoService: TodoServiceService) {
+    this.formObjectValid = {
+      id: 0,
+      title: '',
+      completed: false,
+      body: ''
+    };
+  }
 
   /**
    * создание таска

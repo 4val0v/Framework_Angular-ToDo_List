@@ -15,7 +15,8 @@ import { InMemoryDataService } from './_shared/base_data'; // наша база 
 
 /* страницы для регистрации */
 import { AppComponent } from './app.component';
-import { TodoFormComponent } from './todo-main/todo-form/todo-form.component';
+import { TodoFormComponent___no_test } from './todo-main/todo-form___no_test/todo-form.component';
+import { TodoFormComponent___test } from './todo-main/todo-form___test/todo-form.component';
 import { TodoListComponent } from './todo-main/todo-list/todo-list.component';
 import { TodoMainComponent } from './todo-main/todo-main.component';
 import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-detailed.component';
@@ -45,7 +46,8 @@ import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-
   declarations: [
     /* регистрация страниц */
     AppComponent,  // ниже регистрация страниц
-    TodoFormComponent,
+    TodoFormComponent___no_test,
+    TodoFormComponent___test,
     TodoListComponent,
     TodoDetailedComponent,
     TodoMainComponent

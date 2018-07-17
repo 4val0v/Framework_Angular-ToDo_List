@@ -1,0 +1,18 @@
+<form class="todo-form" (ngSubmit)="createTasks(); formInputVal.reset()"
+      #formInputVal="ngForm"
+      [formGroup]="formValidations" novalidate>
+
+  <input type="text" name="title"
+         [(ngModel)]="formObjectValid.title"
+         formControlName="inputTitle"
+         placeholder="Добавить, Название todo-form___test . . ." autofocus required autocomplete="off">
+
+  <button type="submit" [disabled]="formInputVal.invalid">Добавить</button>
+
+  <input type="text" name="body"
+         *ngIf="formObjectValid.title"
+         [(ngModel)]="formObjectValid.body"
+         formControlName="inputBody"
+         placeholder="Подробное Описание todo-form___test. . ."
+         autofocus required autocomplete="off">
+</form>
