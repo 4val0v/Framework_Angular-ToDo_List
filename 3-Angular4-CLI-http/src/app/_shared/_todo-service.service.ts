@@ -11,7 +11,8 @@ import {Injectable} from '@angular/core'; // добавляем декорато
 // import { _BD } from './base_data';   // получаем данные с Базы Данных (BD вариант 1)
 import {ObjectTypes} from './ObjectTypes'; // типизируем данные
 import {Http, Headers, RequestOptions} from '@angular/http';
-import 'rxjs/add/operator/toPromise'; // из библиотеки "rxjs" нам нужен метод ".toPromise()"
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Observable'; // из библиотеки "rxjs" нам нужен метод ".toPromise()"
 
 /** Injectable()
  * Чтобы указать, что сервис сам может использовать другие сервисы, к классу сервиса применяется декоратор Injectable.
@@ -30,12 +31,16 @@ export class TodoServiceService {
   // и незабываем добавить анотацию @Injectable()
   constructor(private http: Http) {}
 
-  /** метод получения данных, тут мы настраиваем откуда мы получим данные */
-  getDateBaseTodos(): Promise<any> {
+  /**
+   * метод получения данных, тут мы настраиваем откуда мы получим данные
+   *  Observable<any> - типезация получения или Promise<any>
+   * */
+  getDateBaseTodos(): Observable<any> {
     // возращает базу Данных строка 26, "bd: ObjectTypes[] = _BD;"
     // return this.bd; // (BD вариант 1)
 
-    // (HTTP вариант 2)
+/*
+    // (HTTP вариант 2) - Promise
     return this.http.get(this.apiUrl)
       .toPromise()  // получим обещание, но зависит от сервера какой будет ответ - готовый Масив или что-то другое,
       // но в случае с angular-in-memory-web-api мы получим ответ "Обьект" типа Респонс(responses)
@@ -43,6 +48,10 @@ export class TodoServiceService {
       // у Обьекта "responses" вызываем метод ".json()" и получим тело ответа вкачестве обьекта, и он находится в свойстве .data
       .then(pofig => this.bd = pofig)   // передаем масив с задачами в начальный обьект в строке27 "bd: ObjectTypes[] = [];"
       .catch(this.handleError);           // метод для обработки ошибки
+*/
+
+    // (HTTP вариант 3) - Observable
+      return this.http.get(this.apiUrl).map(response => response.json() );
   }
 
   /**

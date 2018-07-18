@@ -27,7 +27,60 @@ describe('AppComponent', () => {
                 ],
                 declarations: [
                     AppComponent, // декларируем тестируемый компонент
-                ]
+                ],
+                // типов поставщиков (providers) :
+                // @info : 1) https://medium.com/front-end-hacking/angular-2-an-introduction-of-bootstrap-and-providers-1c60ffbb7604
+                // @info : 2) https://codecraft.tv/courses/angular/dependency-injection-and-providers/providers/
+                /*
+                  Провайдер класса ( useClass ) :
+                   - Использование компонентного процесса
+                   - Использование процесса начальной загрузки :
+                 */
+                /*
+                  Aliased Class Provider (useExisting) : Поставщик с псевдонимом класса (использование существующего )
+                   - : providers: [ { provide: MandrillService, useClass: GenericEmailService } ]
+                      // Всякий раз, когда кто-либо запрашивает MandrillService  мы возвращаем экземпляр GenericEmailService вместо этого.
+
+                   - :
+                 */
+                /*
+                  Value Provider ( useValue ) :
+                   -  providers: [{
+                        provide: "Config",
+                        useValue: {
+                        // При использовании useValue:{} объектов значения не могут быть изменены, по сути, он доступен только для чтения.
+                          'APIKey': 'XYZ1234ABC',
+                          'APISecret': '555-123-111'
+                        }
+                      }]
+
+                  -  providers: [{
+                        provide: "Config",
+                        useValue: Object.freeze({
+                          'APIKey': 'XYZ1234ABC',
+                          'APISecret': '555-123-111'
+                        })
+                     }]
+                */
+                /*
+                 FactoryProvider ( useFactory ) :
+                 -  providers: [{
+                        provide: "EmailService",
+                        useFactory: () => {
+                          // Когда инжектор разрешает этот провайдер, он вызывает  useFactoryфункцию и возвращает все, что возвращается этой функцией в качестве зависимости.
+                           if (isProd) {
+                              return new MandrillService();
+                           } else {
+                              return new SendGridService();
+                           }
+                        }
+                    }]
+
+                 -  providers: [{
+                      useFactory: () => IS_PROD ? new FakeCarService (): new CarService ()
+                      deps: [Http] // вы можете указать массив зависимостей
+                    }]
+                 */
             });
 
             TestBed.compileComponents()
@@ -40,31 +93,30 @@ describe('AppComponent', () => {
         })
     );
 
-/*    // Ну или раделить так :
+    /*    // Ну или раделить так :
 
-    beforeEach(
-        async(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    RouterTestingModule, // декларируем router-outlet
-                    FormsModule // декларируем привязки типо [(ngModel)]
-                ],
-                declarations: [
-                    AppComponent, // декларируем тестируемый компонент
-                ]
-            }).compileComponents();
-        })
-    );
+        beforeEach(
+            async(() => {
+                TestBed.configureTestingModule({
+                    imports: [
+                        RouterTestingModule, // декларируем router-outlet
+                        FormsModule // декларируем привязки типо [(ngModel)]
+                    ],
+                    declarations: [
+                        AppComponent, // декларируем тестируемый компонент
+                    ]
+                }).compileComponents();
+            })
+        );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AppComponent); // создать экземпляр компонента.
-        component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
-        compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
-        fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
-    });
+        beforeEach(() => {
+            fixture = TestBed.createComponent(AppComponent); // создать экземпляр компонента.
+            component = fixture.debugElement.componentInstance; // Свойство возвращает объект компонента
+            compiled = fixture.debugElement.nativeElement; // Свойство возвращает объект DOM, представляющий управляющиэлемент для компонента
+            fixture.detectChanges(); // Метод заставляет тестовую среду обнаруживать изменения состония и отражать их в шаблоне компонента
+        });
 
-    */
-
+        */
 
 
     it('should create the app', async(() => {

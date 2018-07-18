@@ -1,18 +1,13 @@
-/*
 import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
-import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Location, CommonModule} from '@angular/common';
-/!*
-    зависимости для routerLink тестирования
-    =  https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
-*!/
 import {RouterTestingModule} from '@angular/router/testing';
-import {Router} from '@angular/router';
-import {By} from '@angular/platform-browser';
 
 import {TodoListComponent} from './todo-list.component';
 import {TodoServiceService} from '../../_shared/_todo-service.service';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Headers, RequestOptions} from '@angular/http';
 import {ObjectTypes} from '../../_shared/ObjectTypes';
 
 describe('TodoListComponent', () => {
@@ -21,70 +16,37 @@ describe('TodoListComponent', () => {
   let component: TodoListComponent;
   let compiled;
 
-  /!* фейковый сервис *!/
-  const mockService = {
-    bd: [
-      {
-        id: 0,
-        title: 'TEST - - HTML/CSS',
-        completed: true,
-        body: 'TEST'
-      },
-      {
-        id: 1,
-        title: 'TEST - - JavaScript',
-        completed: true,
-        body: 'Ideally'
-      }
-    ],
-    getDateBaseTodos: function () {
-      console.log('- TEST  "getBase" :  работает фейковый сервер');
-      return this.bd;
-    },
-    CheckTodo: function (checkbox: ObjectTypes) {
-      console.log('- TEST "Check" :  работает фейковый сервер');
-      let base = this.bd;
-
-      base[checkbox.id].completed = !checkbox.completed;
-      return this.bd = base;
-      // return checkbox.completed = !checkbox.completed;
-    },
-    DeleteTodo: function (del: ObjectTypes) {
-      console.log('- TEST "Delete":  работает фейковый сервер');
-      let base = this.bd;
-      const index = base.indexOf(del);
-      if (index > -1) {
-        base.splice(index, 1);
-        return this.bd = base;
-      }
+  class MockMyService {
+    getDateBaseTodos(): Observable {}
+    CheckTodo(checkbox: ObjectTypes) {
+      const Url = ``;
+      this.http.put(Url, checkbox)
+        .toPromise()
+        .then(responses => {
+          console.log('Checkbox : ', checkbox.title);
+          checkbox.completed = !checkbox.completed;
+        });
     }
-  };
-  /!* фейковый сервис *!/
-
-  // тестовый компонент для перехода по урлам, для теста routerLink
-  @Component({
-    template: ''
-  })
-  class DummyComponent {}
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
         FormsModule,
-        RouterTestingModule.withRoutes([
-          // Настраиваем параметры роутинга
-          // https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
-          {path: 'todo/:id', component: DummyComponent}
-        ])
+        RouterTestingModule
       ],
-      declarations: [TodoListComponent, DummyComponent],
-      providers: [
-        // https://habr.com/post/349380/
-        // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
-        {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
-      ]
+      declarations: [TodoListComponent],
+      providers: [TodoServiceService],
+      schemas: [ NO_ERRORS_SCHEMA ] // можно проинорировать routerLink в дочерних компонентах.
     })
+      .overrideComponent(TodoListComponent, {
+        set: {
+          providers: [
+            { provide: TodoServiceService, useClass: MockMyService }
+          ]
+        }
+      })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(TodoListComponent);
@@ -95,62 +57,14 @@ describe('TodoListComponent', () => {
   }));
 
 
-/!*  it('should Create TodoListComponent', async(() => {
+
+  it('should Create TodoListComponent', async(() => {
     console.log('- TEST "Create" TodoListComponent success');
 
     expect(component).toBeTruthy();
   }));
-*!/
 
-// https://codecraft.tv/courses/angular/unit-testing/asynchronous/
-  it('Button label via jasmine.done', () => {
-    fixture.detectChanges();
-    expect(compiled.ObjectTodos.length).toBe(0);
-    spyOn(TodoServiceService, 'getDateBaseTodos').and.returnValue(Promise.resolve(true));
-    component.ngOnInit();
-    fixture.detectChanges();
-    expect(compiled.ObjectTodos.length).toBe(3);
-  });
-
-/!*
-  it(`should press "Unchecked" Fist tasks`, async(() => {
-    console.log('- TEST "Unchecked" TodoListComponent success');
-
-    const objList = component.ObjectTodos[0];
-    const asd = spyOn(component, 'onCheck'); // https://habr.com/post/169699/
-    // используется фейковый сервис в котором и вызывается this.todoService.CheckTodo(checkbox);
-    component.onCheck(component.ObjectTodos, objList);
-    // component.ngOnInit();
-    expect(asd).toHaveBeenCalled();
-    fixture.detectChanges();
-  }));
-
-  it(`should press "Delete" Fist tasks`, async(() => {
-    console.log('- TEST "Delete" TodoListComponent success');
-
-    const objList = component.ObjectTodos[0];
-    const asd = spyOn(component, 'onDelete'); // https://habr.com/post/169699/
-    // подставится фейковый сервис в нутри етой функции "onDelete"
-    component.onDelete(component.ObjectTodos, objList);
-    // component.ngOnInit();
-    expect(asd).toHaveBeenCalled();
-    fixture.detectChanges();
-  }));
-
-  it('should go to url', async(
-    inject([Router, Location], (router: Router, location: Location) => {
-      console.log('- TEST "[routerLink]" TodoListComponent success');
-
-      fixture.debugElement.query(By.css('a')).nativeElement.click(); // имитация нажатия
-      fixture.whenStable().then(() => {
-        // переходит по первому линку поетому первый елемент масива 0 и незабываем что унас фейковый сервис
-        expect(location.path()).toEqual('/todo/0');
-      });
-    })
-  ));
-
-  *!/
 
 });
 
-*/
+

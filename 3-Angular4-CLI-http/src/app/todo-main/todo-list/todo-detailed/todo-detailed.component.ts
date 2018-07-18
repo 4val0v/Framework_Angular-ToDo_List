@@ -31,6 +31,10 @@ export class TodoDetailedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todoService.getDateBaseTodos().then( _BD => this.ObjectTodos = _BD );    // (HTTP вариант 2)
+    //  (HTTP вариант 2) - Promise
+    // this.todoService.getDateBaseTodos().then( _BD => this.ObjectTodos = _BD );
+
+    // (HTTP вариант 3) - Observable
+    this.todoService.getDateBaseTodos().subscribe(_BD => this.ObjectTodos = _BD );
   }
 }

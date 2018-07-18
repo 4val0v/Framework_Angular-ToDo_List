@@ -87,6 +87,59 @@ describe('TodoListComponent', () => {
                 // Не стоит путать useValue и provide. Это разные объекты: первый — клон второго.
                 {provide: TodoServiceService, useValue: mockService} // Делаем Подмену сервиса на фейковый для тестов.
             ]
+            // типов поставщиков (providers) :
+            // @info : 1) https://medium.com/front-end-hacking/angular-2-an-introduction-of-bootstrap-and-providers-1c60ffbb7604
+            // @info : 2) https://codecraft.tv/courses/angular/dependency-injection-and-providers/providers/
+            /*
+              Провайдер класса ( useClass ) :
+               - Использование компонентного процесса
+               - Использование процесса начальной загрузки :
+             */
+            /*
+              Aliased Class Provider (useExisting) : Поставщик с псевдонимом класса (использование существующего )
+               - : providers: [ { provide: MandrillService, useClass: GenericEmailService } ]
+                  // Всякий раз, когда кто-либо запрашивает MandrillService  мы возвращаем экземпляр GenericEmailService вместо этого.
+
+               - :
+             */
+            /*
+              Value Provider ( useValue ) :
+               -  providers: [{
+                    provide: "Config",
+                    useValue: {
+                    // При использовании useValue:{} объектов значения не могут быть изменены, по сути, он доступен только для чтения.
+                      'APIKey': 'XYZ1234ABC',
+                      'APISecret': '555-123-111'
+                    }
+                  }]
+
+              -  providers: [{
+                    provide: "Config",
+                    useValue: Object.freeze({
+                      'APIKey': 'XYZ1234ABC',
+                      'APISecret': '555-123-111'
+                    })
+                 }]
+            */
+            /*
+             FactoryProvider ( useFactory ) :
+             -  providers: [{
+                    provide: "EmailService",
+                    useFactory: () => {
+                      // Когда инжектор разрешает этот провайдер, он вызывает  useFactoryфункцию и возвращает все, что возвращается этой функцией в качестве зависимости.
+                       if (isProd) {
+                          return new MandrillService();
+                       } else {
+                          return new SendGridService();
+                       }
+                    }
+                }]
+
+             -  providers: [{
+                  useFactory: () => IS_PROD ? new FakeCarService (): new CarService ()
+                  deps: [Http] // вы можете указать массив зависимостей
+                }]
+             */
         })
         .compileComponents()
         .then(() => {
