@@ -1,3 +1,4 @@
+/*
 import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -17,10 +18,13 @@ describe('TodoListComponent', () => {
   let compiled;
 
   class MockMyService {
-    getDateBaseTodos(): Observable {}
+    private apiUrl = 'api/_BD';
+    private Url = ``;
+    getDateBaseTodos(): Observable {
+      return this.http.get(this.apiUrl).map(response => response.json() );
+    }
     CheckTodo(checkbox: ObjectTypes) {
-      const Url = ``;
-      this.http.put(Url, checkbox)
+      this.http.put(this.Url, checkbox)
         .toPromise()
         .then(responses => {
           console.log('Checkbox : ', checkbox.title);
@@ -68,3 +72,4 @@ describe('TodoListComponent', () => {
 });
 
 
+*/

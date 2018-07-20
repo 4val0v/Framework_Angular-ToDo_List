@@ -1,25 +1,27 @@
 /** Модули для приложения */
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // деректива для работы с модулем [(ngModul)]
-import { AlertModule } from 'ngx-bootstrap'; // для работы с bootstrap-css
-import { AppRoutingModul} from './app.routing'; // кастомно добавил редирект страниц
-import { TodoServiceService } from './_shared/_todo-service.service'; // ВНЕДРЕНИЕ ЗАВИСИМОСТЕЙ
-import { ReactiveFormsModule } from '@angular/forms'; // реактив проверка формы
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms'; // деректива для работы с модулем [(ngModul)]
+import {AlertModule} from 'ngx-bootstrap'; // для работы с bootstrap-css
+import {AppRoutingModul} from './app.routing'; // кастомно добавил редирект страниц
+import {TodoServiceService} from './_shared/_todo-service.service'; // ВНЕДРЕНИЕ ЗАВИСИМОСТЕЙ
+import {ReactiveFormsModule} from '@angular/forms'; // реактив проверка формы
 
-import { HttpModule } from '@angular/http'; // подключение Http модуля
+import {HttpModule} from '@angular/http'; // подключение Http модуля
+import {HttpClientModule} from '@angular/common/http';
 
 /* подробней :  https://angular.io/tutorial/toh-pt6#simulate-the-web-api */
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api'; // регистрации модуля
-import { InMemoryDataService } from './_shared/base_data'; // наша база данных
+import {InMemoryWebApiModule} from 'angular-in-memory-web-api'; // регистрации модуля
+import {InMemoryDataService} from './_shared/base_data'; // наша база данных
 
 /* страницы для регистрации */
-import { AppComponent } from './app.component';
-import { TodoFormComponent___no_test } from './todo-main/todo-form___no_test/todo-form.component';
-import { TodoFormComponent___test } from './todo-main/todo-form___test/todo-form.component';
-import { TodoListComponent } from './todo-main/todo-list/todo-list.component';
-import { TodoMainComponent } from './todo-main/todo-main.component';
-import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-detailed.component';
+import {AppComponent} from './app.component';
+import {TodoFormComponent___no_test} from './todo-main/todo-form___no_test/todo-form.component';
+import {TodoFormComponent___test} from './todo-main/todo-form___test/todo-form.component';
+import {TodoListComponent} from './todo-main/todo-list/todo-list.component';
+import {TodoMainComponent} from './todo-main/todo-main.component';
+import {TodoDetailedComponent} from './todo-main/todo-list/todo-detailed/todo-detailed.component';
+
 
 /**
  * @NgModule - Анотация
@@ -37,10 +39,11 @@ import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-
     BrowserModule,
     AppRoutingModul,      // регистрация роутера для страниц
     FormsModule,          // регистрация модуля [(ngModul)]
-    HttpModule,           // подключение Http модуля
+    HttpModule,           // подключение Http модуля ето старый
+    HttpClientModule,     // подключение Http модуля. если используете Angular 4.3.x и выше:
     ReactiveFormsModule,  // проверка валидации формы на лету
     AlertModule.forRoot(), // регистрация bootstrap-css
-    InMemoryWebApiModule.forRoot( InMemoryDataService ) // и тут-же указываем какую БД мы будем использовать
+    InMemoryWebApiModule.forRoot(InMemoryDataService) // и тут-же указываем какую БД мы будем использовать
     /* forRoot() - для настройки, конфигурация всего приложения(корневой модуль)*/
   ],
   declarations: [
@@ -56,4 +59,5 @@ import { TodoDetailedComponent } from './todo-main/todo-list/todo-detailed/todo-
   bootstrap: [AppComponent]
 })
 // Поскольку мы используем в другом месте то добавляем "export"
-export class AppModule { }
+export class AppModule {
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TodoServiceService } from '../../_shared/_todo-service.service'; // ВНЕДРЕНИЕ ЗАВИСИМОСТЕЙ
 import { ObjectTypes } from '../../_shared/ObjectTypes';
 import 'rxjs/add/operator/toPromise';
+import {HttpErrorResponse} from '@angular/common/http'; // обработчик ошибок
 
 @Component({
   selector: 'app-todo-list',
@@ -30,14 +31,35 @@ export class TodoListComponent implements OnInit {
     // (BD вариант 1) - фиксированная бд - костыль
     // this.ObjectTodos = this.todoService.getDateBaseTodos();
 
-    //  (HTTP вариант 2) - Promise
 /*
+    //  (HTTP вариант 2) - Promise
     this.todoService.getDateBaseTodos()
       .then( _BD => this.ObjectTodos = _BD );    // (HTTP вариант 2)
 */
 
     // (HTTP вариант 3) - Observable
-    this.todoService.getDateBaseTodos().subscribe(_BD => this.ObjectTodos = _BD );
+    this.todoService.getDateBaseTodos().subscribe(
+      (value: ObjectTypes[]) => {
+          console.log('todo-list: ', value );
+          this.ObjectTodos = value;
+          // data.map(val => {
+          //   this.ObjectTodos.push(val);
+          // });
+        },
+      (err: HttpErrorResponse) => {
+          // перехватчики и HttpClient в проекте  ==  https://codingthesmartway.com/angular-4-3-httpclient-accessing-rest-web-services-with-angular/
+          // Вы также можете получить более конкретную информацию об ошибке,
+          // указав параметр типа HttpErrorResponse для функции обработчика ошибок.
+          // HttpErrorResponse необходимо импортировать из @ angle / common / http :
+          if (err.error instanceof Error) {
+            console.log('Client-side error occured.', err);
+          } else {
+            console.log('Server-side error occured.', err);
+          }
+      }
+    );
+
+
   }
 
   onCheck(checkbox: ObjectTypes) {

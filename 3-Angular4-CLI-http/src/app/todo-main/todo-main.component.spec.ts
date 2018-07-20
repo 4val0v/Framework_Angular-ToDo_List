@@ -8,8 +8,9 @@ import {TodoFormComponent___test} from './todo-form___test/todo-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TodoListComponent} from './todo-list/todo-list.component';
 import {TodoServiceService} from '../_shared/_todo-service.service';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {HttpModule} from '@angular/http'; // игнорирование селекторов подключаемых компонентов.
+import {NO_ERRORS_SCHEMA} from '@angular/core'; // игнорирование селекторов подключаемых компонентов.
+import {HttpModule} from '@angular/http'; // старый модуль
+import {HttpClientModule} from '@angular/common/http'; // новый модуль
 
 describe('TodoMainComponent', () => {
 
@@ -23,6 +24,7 @@ describe('TodoMainComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           HttpModule, // для TodoFormComponent___no_test
+          HttpClientModule,
           FormsModule, // декларируем привязки типо [(ngModel)]
           RouterTestingModule, // декларируем привязки типо [routerLink]
           ReactiveFormsModule // Декларирование FormGroup в  TodoFormComponent

@@ -40,7 +40,7 @@ export class TodoFormComponent___test {
   createTasks() {
     // todo не работает
     this.formObjectValid = this.formValidations.value;
-    console.log(this.formObjectValid );
+    console.log('app-todo-form___test - createTasks - ', this.formObjectValid );
     this.todoService.CheckTodo(this.formObjectValid);
   }
 

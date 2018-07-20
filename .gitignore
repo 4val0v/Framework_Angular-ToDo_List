@@ -51,3 +51,5 @@ package-lock.json
 NOT-WORKS   - - - - 5-Angular4-login-registration/
 /angular_testing-components
 /6-Angular4-CLI-login_registration
+/angular-auth0-aside
+/httpclient-testing

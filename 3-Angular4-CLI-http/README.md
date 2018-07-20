@@ -1,4 +1,18 @@
-# Angular-CLI Http
+# Angular-CLI Http + unit tests
+
+#### @info 
+
+1) [Тестирование с помощью Angular HttpClientTestingAPI](https://medium.com/netscape/testing-with-the-angular-httpclient-api-648203820712),  =>  [GitHab HttpclientTesting](https://github.com/cironunes/httpclient-testing)
+
+2) [HttpClient (доступ к веб-службам REST с угловым)](https://codingthesmartway.com/angular-4-3-httpclient-accessing-rest-web-services-with-angular/)
+
+3) [Новый Угловой HttpClientAPI](https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361)
+
+4) [тестирование @Input/@Output](http://www.vincecampanale.com/blog/2018/03/22/testing-custom-events-angular/)
+
+5) [YouTube Unit-тесты – Тестирование httpClient](https://youtu.be/64CLXyQb7Jo)
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8
 

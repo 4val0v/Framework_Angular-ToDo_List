@@ -1,7 +1,7 @@
 import {TestBed, async, ComponentFixture, inject} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { Location, CommonModule } from '@angular/common';
+import {Location, CommonModule} from '@angular/common';
 /*
     зависимости для routerLink тестирования
     =  https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
@@ -74,7 +74,7 @@ describe('TodoListComponent', () => {
                 RouterTestingModule.withRoutes([
                     // Настраиваем параметры роутинга
                     // https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink/39587397
-                    { path: 'todo/:id', component: DummyComponent }
+                    {path: 'todo/:id', component: DummyComponent}
                 ])
             ],
             declarations: [TodoListComponent, DummyComponent],
@@ -141,13 +141,13 @@ describe('TodoListComponent', () => {
                 }]
              */
         })
-        .compileComponents()
-        .then(() => {
-            fixture = TestBed.createComponent(TodoListComponent);
-            component = fixture.debugElement.componentInstance;
-            compiled = fixture.debugElement.nativeElement;
-            fixture.detectChanges();
-        });
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(TodoListComponent);
+                component = fixture.debugElement.componentInstance;
+                compiled = fixture.debugElement.nativeElement;
+                fixture.detectChanges();
+            });
     }));
 
 
@@ -182,14 +182,14 @@ describe('TodoListComponent', () => {
     }));
 
     it('should go to url', async(
-            inject([Router, Location], (router: Router, location: Location) => {
-                console.log('- TEST "[routerLink]" TodoListComponent success');
+        inject([Router, Location], (router: Router, location: Location) => {
+            console.log('- TEST "[routerLink]" TodoListComponent success');
 
-                fixture.debugElement.query(By.css('a')).nativeElement.click(); // имитация нажатия
-                fixture.whenStable().then(() => {
-                    // переходит по первому линку поетому первый елемент масива 0 и незабываем что унас фейковый сервис
-                    expect(location.path()).toEqual('/todo/0');
-                });
-            })
+            fixture.debugElement.query(By.css('a')).nativeElement.click(); // имитация нажатия
+            fixture.whenStable().then(() => {
+                // переходит по первому линку поетому первый елемент масива 0 и незабываем что унас фейковый сервис
+                expect(location.path()).toEqual('/todo/0');
+            });
+        })
     ));
 });
