@@ -27,7 +27,8 @@ export class TodoListComponent implements OnInit {
     this.ObjectTodos = [];
   }
 
-  async ngOnInit() { // метод который ангуляр вызовет в определенный момент https://angular.io/guide/lifecycle-hooks
+  // метод который ангуляр вызовет в определенный момент https://angular.io/guide/lifecycle-hooks
+  async ngOnInit() {
     // (BD вариант 1) - фиксированная бд - костыль
     // this.ObjectTodos = this.todoService.getDateBaseTodos();
 
@@ -58,8 +59,6 @@ export class TodoListComponent implements OnInit {
           }
       }
     );
-
-
   }
 
   onCheck(checkbox: ObjectTypes) {

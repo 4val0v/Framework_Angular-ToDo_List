@@ -35,8 +35,7 @@ export class TodoServiceService {
   // получим екземпляр сервиса http с типом данных Http
   // и незабываем добавить анотацию @Injectable()
   // Используйте класс HttpClient из HttpClientModule, если вы используете Angular 4.3.x и выше:
-  constructor(private http: Http, private httpClient: HttpClient) {
-  }
+  constructor(private http: Http, private httpClient: HttpClient) {}
 
 
   /**
@@ -66,7 +65,7 @@ export class TodoServiceService {
     // (HTTP вариант 3) - Observable
     // преобразуем в json и в других компонентах подпишемся на ответ.
     // return this.httpClient.get(this.apiUrl).map(response => response.json() ); // ошибка - ненужно обрабатывать .json()
-    return this.httpClient.get(this.apiUrl).map((response: { data: object[] }) => {
+    return this.httpClient.get(this.apiUrl).map( (response: { data: object[] }) => {
       console.log('- service httpClient.get', response);
       return response.data;
     });
@@ -94,7 +93,18 @@ export class TodoServiceService {
 
 
 // Если используем новый HttpClient = (HTTP вариант 3) - Observable
-    console.log('- service httpClient.put = ');
+    console.log('- service httpClient.put - START');
+    const Url = `${this.apiUrl}/${checkbox.id}`;
+    this.httpClient.put(Url, checkbox).subscribe(
+      data => {
+        console.log('- service subscribe : checkbox.title = ', checkbox.title);
+        checkbox.completed = !checkbox.completed;
+      },
+      (err: HttpErrorResponse) => {
+        console.log('- service httpClient.put - Error occured = ', err);
+        this.handleError(err);
+      }
+    );
   }
 
 
@@ -123,16 +133,20 @@ export class TodoServiceService {
 
 
 // Если используем новый HttpClient = (HTTP вариант 3) - Observable
-    this.httpClient.delete(this.apiUrl).subscribe(
+    const Url = `${this.apiUrl}/${del.id}`;
+    this.httpClient.delete(Url).subscribe(
       res => {
         console.log('- service httpClient.delete  = ', res);
+        console.log('- service httpClient.delete  = ', this.bd);
+        console.log('- service httpClient.delete  = ', del);
         const index = this.bd.indexOf(del);
         if (index > -1) {
           this.bd.splice(index, 1);
         }
       },
-      (err) => {
+      (err: HttpErrorResponse) => {
         console.log('- service httpClient.delete - Error occured = ', err);
+        this.handleError(err);
       }
     );
   }
@@ -176,7 +190,7 @@ export class TodoServiceService {
         // res => console.log(res.json().data);
         // todoCreate => this.bd.push( todoCreate );
       },
-      (err) => {
+      (err: HttpErrorResponse) => {
         console.log('- service httpClient.post - Error occured = ', err);
         // this.handleError;
       }
@@ -190,7 +204,7 @@ export class TodoServiceService {
    * @param error
    * @returns {Promise<never>}
    */
-  private handleError(error: any) {
+  private handleError(error: HttpErrorResponse) {
     console.log('произошла ошибка в промисах : ', error);
     // у обьекта Promise, метод reject() возвращает отвергнутые обещания
     return Promise.reject(error.message || error);
